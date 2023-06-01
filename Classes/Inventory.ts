@@ -33,6 +33,22 @@ class Inventory {
       item.turn();
     }
   }
+
+  fromJSON(json: string | object): Inventory {
+    const data = typeof json === "string" ? JSON.parse(json) : json;
+    const inventory = new Inventory();
+    Object.assign(inventory, data);
+
+    const items: Item[] = [];
+    for (let item of inventory.getItems()) {
+      const iData = typeof item === "string" ? JSON.parse(item) : item;
+
+      items.push(new Item(iData));
+    }
+    Object.assign(inventory.list, items);
+
+    return inventory;
+  }
 }
 
 export default Inventory;

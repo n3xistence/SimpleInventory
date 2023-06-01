@@ -3,12 +3,26 @@ import Item from "./Classes/Item";
 import ItemEffect from "./Classes/ItemEffect";
 import Integer from "./Classes/Integer";
 
+import fs from "fs";
+
+class User {
+  name: string;
+  id: number;
+  inventory: Inventory;
+
+  constructor(name: string, id: number, inventory: Inventory) {
+    this.name = name;
+    this.id = id;
+    this.inventory = inventory;
+  }
+}
+
 let sword: Item = new Item({
   name: "Sword of a thousand Truths",
   id: 1,
   code: new Integer(1).toBase36(),
   rarity: "Legendary",
-  cooldown: 5,
+  cooldown: { max: 5, current: 0 },
   effect: {
     category: "damage",
     type: "multiplicative",
@@ -22,7 +36,7 @@ let potion: Item = new Item({
   id: 2,
   code: `bz#${new Integer(2).toBase36()}`,
   rarity: "Rare",
-  cooldown: 2,
+  cooldown: { max: 2, current: 0 },
   effect: {
     category: "healing",
     type: "multiplicative",
@@ -36,7 +50,7 @@ let bow: Item = new Item({
   id: 3,
   code: `bz#${new Integer(3).toBase36()}`,
   rarity: "Epic",
-  cooldown: 3,
+  cooldown: { max: 3, current: 0 },
   effect: {
     category: "attackspeed",
     type: "multiplicative",
@@ -48,22 +62,24 @@ let bow: Item = new Item({
 const inv: Inventory = new Inventory([sword, potion]);
 inv.addItem(bow);
 
-// let found: Item | undefined = inv.findByName("Sword of a hundred Truths");
-// if (!found) console.log("Correct");
-// else console.log("Incorrect");
-
-// found = inv.findByName("Sword of a thousand Truths");
-// if (found) console.log("Correct");
-// else console.log("Incorrect");
-
 const bowItem: Item | undefined = inv.findById(3);
 if (bowItem) {
   let used: boolean = bowItem.use();
-  console.log(used);
+  console.log(used ? "Bow Was Used." : "Bow Was not Used.");
 }
 
-console.log(inv.getItems());
+let user: User = new User("username", 261266, inv);
+fs.writeFileSync("./data.json", JSON.stringify(user, null, "\t"));
 
-inv.moveTurn();
+let obj = JSON.parse(fs.readFileSync("./data.json", "utf-8"));
+let inventory = new Inventory().fromJSON(obj.inventory);
 
-console.log(inv.getItems());
+const item = inventory.findById(3);
+if (item) {
+  console.log(item ? "Item found" : "Item not found");
+  let wasUsed = item.use();
+  if (wasUsed) console.log("Item was used");
+  else console.log("Item is on cooldown.");
+} else {
+  console.log("Item was not found");
+}

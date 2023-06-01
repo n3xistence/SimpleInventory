@@ -3,18 +3,18 @@ import ItemEffect from "./ItemEffect";
 /*
  *   Items are unique so we do not need an amount
  */
+interface Cooldown {
+  current: number;
+  max: number;
+}
+
 interface ItemProps {
   name: string;
   id: number;
   code: string;
   rarity: string;
-  cooldown: number;
+  cooldown: Cooldown;
   effect: ItemEffect;
-}
-
-interface Cooldown {
-  current: number;
-  max: number;
 }
 
 class Item {
@@ -22,17 +22,25 @@ class Item {
   id: number;
   code: string;
   rarity: string;
-  cooldown: Cooldown = { current: 0, max: 0 };
+  cooldown: Cooldown;
   effect: ItemEffect;
 
   constructor(props: ItemProps) {
-    const { name, id, code, rarity, cooldown, effect } = props;
+    const {
+      name,
+      id,
+      code,
+      rarity,
+      cooldown = { current: 0, max: 3 },
+      effect,
+    } = props;
+    let currentCD = cooldown.current;
 
     this.name = name;
     this.id = id;
     this.code = code;
     this.rarity = rarity;
-    this.cooldown.max = cooldown;
+    this.cooldown = cooldown;
     this.effect = effect;
   }
 
