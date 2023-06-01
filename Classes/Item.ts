@@ -46,7 +46,7 @@ class Item {
   turn(): void {
     if (this.cooldown.current === 0) return;
 
-    this.cooldown.current = this.cooldown.current - 1;
+    this.cooldown.current -= 1;
   }
 }
 
