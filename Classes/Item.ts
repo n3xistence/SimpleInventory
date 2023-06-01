@@ -26,15 +26,7 @@ class Item {
   effect: ItemEffect;
 
   constructor(props: ItemProps) {
-    const {
-      name,
-      id,
-      code,
-      rarity,
-      cooldown = { current: 0, max: 3 },
-      effect,
-    } = props;
-    let currentCD = cooldown.current;
+    const { name, id, code, rarity, cooldown, effect } = props;
 
     this.name = name;
     this.id = id;
