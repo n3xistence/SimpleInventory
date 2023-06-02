@@ -1,4 +1,5 @@
 import ItemEffect from "./ItemEffect";
+import Integer from "./Integer";
 
 /*
  *   Items are unique so we do not need an amount
@@ -11,7 +12,6 @@ interface Cooldown {
 interface ItemProps {
   name: string;
   id: number;
-  code: string;
   rarity: string;
   cooldown: Cooldown;
   effect: ItemEffect;
@@ -25,12 +25,13 @@ class Item {
   cooldown: Cooldown;
   effect: ItemEffect;
 
+  // might remove code from props and generate it when the class is invoked -> need to import Integer
   constructor(props: ItemProps) {
-    const { name, id, code, rarity, cooldown, effect } = props;
+    const { name, id, rarity, cooldown, effect } = props;
 
     this.name = name;
     this.id = id;
-    this.code = code;
+    this.code = `bz#${new Integer(id).toBase36()}`;
     this.rarity = rarity;
     this.cooldown = cooldown;
     this.effect = effect;

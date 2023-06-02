@@ -2,11 +2,27 @@
 	"name": "username",
 	"id": 261266,
 	"inventory": {
+		"activeItem": {
+			"name": "Bow of the Forest",
+			"id": 3,
+			"code": "bz#0003",
+			"rarity": "Epic",
+			"cooldown": {
+				"max": 3,
+				"current": 3
+			},
+			"effect": {
+				"category": "attackspeed",
+				"type": "multiplicative",
+				"modifier": 0.1,
+				"text": "+10% Attackspeed"
+			}
+		},
 		"list": [
 			{
 				"name": "Sword of a thousand Truths",
 				"id": 1,
-				"code": "0001",
+				"code": "bz#0001",
 				"rarity": "Legendary",
 				"cooldown": {
 					"max": 5,
@@ -33,22 +49,6 @@
 					"type": "multiplicative",
 					"modifier": 0.2,
 					"text": "Heals 20% of max health"
-				}
-			},
-			{
-				"name": "Bow of the Forest",
-				"id": 3,
-				"code": "bz#0003",
-				"rarity": "Epic",
-				"cooldown": {
-					"max": 3,
-					"current": 3
-				},
-				"effect": {
-					"category": "attackspeed",
-					"type": "multiplicative",
-					"modifier": 0.1,
-					"text": "+10% Attackspeed"
 				}
 			}
 		]

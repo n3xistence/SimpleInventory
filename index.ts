@@ -20,7 +20,6 @@ class User {
 let sword: Item = new Item({
   name: "Sword of a thousand Truths",
   id: 1,
-  code: new Integer(1).toBase36(),
   rarity: "Legendary",
   cooldown: { max: 5, current: 0 },
   effect: {
@@ -34,7 +33,6 @@ let sword: Item = new Item({
 let potion: Item = new Item({
   name: "Strong Potion of Health",
   id: 2,
-  code: `bz#${new Integer(2).toBase36()}`,
   rarity: "Rare",
   cooldown: { max: 2, current: 0 },
   effect: {
@@ -48,7 +46,6 @@ let potion: Item = new Item({
 let bow: Item = new Item({
   name: "Bow of the Forest",
   id: 3,
-  code: `bz#${new Integer(3).toBase36()}`,
   rarity: "Epic",
   cooldown: { max: 3, current: 0 },
   effect: {
@@ -59,14 +56,21 @@ let bow: Item = new Item({
   } satisfies ItemEffect,
 });
 
+/* -------------------- Testing -------------------- */
 const inv: Inventory = new Inventory([sword, potion]);
 inv.addItem(bow);
+
+console.log(inv.getActiveItem());
+console.log(inv.getItems());
 
 const bowItem: Item | undefined = inv.findById(3);
 if (bowItem) {
   let used: boolean = bowItem.use();
   console.log(used ? "Bow Was Used." : "Bow Was not Used.");
+  inv.setActiveItem(bowItem);
 }
+
+console.log(inv.getActiveItem());
 
 let user: User = new User("username", 261266, inv);
 fs.writeFileSync("./data.json", JSON.stringify(user, null, "\t"));
@@ -76,10 +80,20 @@ let inventory = new Inventory().fromJSON(obj.inventory);
 
 const item = inventory.findById(3);
 if (item) {
-  console.log(item ? "Item found" : "Item not found");
+  console.log("Item was found");
   let wasUsed = item.use();
-  if (wasUsed) console.log("Item was used");
-  else console.log("Item is on cooldown.");
+  if (!wasUsed) console.log("Item is on cooldown");
 } else {
   console.log("Item was not found");
 }
+
+const foundSword: Item | undefined = inv.findByCode("bz#0001");
+if (foundSword) {
+  console.log("Sword was found");
+  let wasUsed: boolean = foundSword.use();
+  if (wasUsed) inv.setActiveItem(foundSword);
+} else {
+  console.log("Sword was not found");
+}
+
+console.log(inv);

@@ -1,6 +1,7 @@
 import Item from "./Item";
 
 class Inventory {
+  private activeItem: Item | undefined;
   private list: Item[];
 
   constructor(list: Item[] = []) {
@@ -11,7 +12,11 @@ class Inventory {
     return this.list;
   }
 
-  // we can use .find() since both name and id will be unique
+  getActiveItem(): Item | undefined {
+    return this.activeItem;
+  }
+
+  // we can use .find() since id, name and code will all be unique
   findByName(name: string): Item | undefined {
     return this.list.find((e) => e.name === name);
   }
@@ -32,6 +37,14 @@ class Inventory {
     for (let item of this.list) {
       item.turn();
     }
+  }
+
+  setActiveItem(item: Item): void {
+    const itemIndex: number = this.list.findIndex((e) => e.id === item.id);
+    if (itemIndex === -1) throw Error("No Such Item");
+
+    this.list.splice(itemIndex, 1);
+    this.activeItem = item;
   }
 
   fromJSON(json: string | object): Inventory {
