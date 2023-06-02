@@ -30,12 +30,30 @@ class Inventory {
   }
 
   addItem(item: Item): void {
-    this.list.push(item);
+    if (this.activeItem && this.activeItem.id === item.id) {
+      this.activeItem.amount += 1;
+      return;
+    }
+
+    let found: Item | undefined = this.findById(item.id);
+    if (found) found.amount += 1;
+    else this.list.push(item);
+  }
+
+  removeItem(item: Item): void {
+    if (this.activeItem && this.activeItem.id === item.id) {
+      this.activeItem.amount -= 1;
+      return;
+    }
+
+    let found: Item | undefined = this.findById(item.id);
+    if (found) found.amount += 1;
+    else this.list.push(item);
   }
 
   moveTurn(): void {
     for (let item of this.list) {
-      item.turn();
+      // item.turn();
     }
   }
 

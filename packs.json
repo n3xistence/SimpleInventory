@@ -1,0 +1,40 @@
+{
+  "firstEdition": {
+    "price": 10,
+    "common": {
+      "odds": "x",
+      "list": []
+    },
+    "rare": {
+      "odds": "x",
+      "list": []
+    },
+    "legendary": {
+      "odds": "x",
+      "list": []
+    },
+    "celestial": {
+      "odds": 0.1,
+      "list": []
+    }
+  },
+  "secondEdition": {
+    "price": 10,
+    "common": {
+      "odds": "x",
+      "list": []
+    },
+    "rare": {
+      "odds": "x",
+      "list": []
+    },
+    "legendary": {
+      "odds": "x",
+      "list": []
+    },
+    "celestial": {
+      "odds": 0.1,
+      "list": []
+    }
+  }
+}
